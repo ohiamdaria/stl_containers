@@ -18,7 +18,7 @@ include(GoogleTest)
 enable_testing()
 
 file(GLOB SOURCES /Users/dashakoroleva/CLionProjects/untitled2/tests/*.cpp)
-add_executable(tests ${SOURCES})
+add_executable(tests ${SOURCES} )
 
 
 target_link_libraries(tests GTest::gtest_main)

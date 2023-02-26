@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+
 namespace s21 {
 template <typename Key ,typename Compare = std::less<Key>>
 class BinaryTree {
@@ -247,7 +248,8 @@ class BinaryTree {
   std::vector<std::pair<iterator, bool>> emplace_uniq(Args &&...args) noexcept {
     std::vector<std::pair<iterator, bool>> res_vector;
     for (auto value : {std::forward<Args>(args)...}) {
-      Node *new_node = new Node(static_cast<std::pair<const int, int>>(value));
+        Node *new_node;
+        new_node = new Node(static_cast<value_type>(value));
       std::pair<iterator, bool> temp = insert(new_node, true);
       if (!temp.second) {
           delete new_node;
@@ -277,20 +279,24 @@ class BinaryTree {
   }
 
   // https://temofeev.ru/info/articles/udalenie-uzlov-iz-krasno-chyernogo-dereva/
+
   void s21_delete_node(Node *del) {
     if (s21_is_red(del) && del->left_ != nil_ && del->right_ != nil_) {
       Node *left_max = s21_max_node(del->left_);
-      std::swap(left_max->key_, del->key_);
+//      std::swap(left_max->key_, del->key_);
+        s21_swap_node(left_max, del);
       s21_delete_node(left_max);
     } else if (s21_is_black(del) && del->left_ != nil_ && del->right_ != nil_) {
       Node *left_max = s21_max_node(del->left_);
-      std::swap(left_max->key_, del->key_);
+//      std::swap(left_max->key_, del->key_);
+        s21_swap_node(left_max, del);
       s21_delete_node(left_max);
     } else if (s21_is_black(del) &&
                (del->left_ != nil_ || del->right_ != nil_)) {
       // у черного узла - если один ребенок, то точно красный без детей
       Node *son = del->left_ != nil_ ? del->left_ : del->right_;
-      std::swap(son->key_, del->key_);
+//      std::swap(son->key_, del->key_);
+        s21_swap_node(son, del);
       s21_delete_node(son);
     } else if (s21_is_red(del) && del->right_ == nil_ && del->left_ == nil_) {
       s21_delete_son(del);
@@ -318,13 +324,15 @@ class BinaryTree {
     if (s21_is_red(current) && current->left_ != nil_ &&
         current->right_ != nil_) {
       Node *left_max = s21_max_node(current->left_);
-      std::swap(left_max->key_, current->key_);
+        s21_swap_node(left_max, current);
+//      std::swap(left_max->key_, current->key_);
       s21_cut_node(left_max);
       result = left_max;
     } else if (s21_is_black(current) && current->left_ != nil_ &&
                current->right_ != nil_) {
       Node *left_max = s21_max_node(current->left_);
-      std::swap(left_max->key_, current->key_);
+        s21_swap_node(left_max, current);
+//      std::swap(left_max->key_, current->key_);
       s21_cut_node(left_max);
       result = left_max;
     } else if (s21_is_black(current) &&
@@ -359,6 +367,7 @@ class BinaryTree {
       son->parent_->right_ = nil_;
     }
   }
+
 
   void s21_swap_node(Node *current, Node *other) {
     if (current->parent_->left_ == current) {

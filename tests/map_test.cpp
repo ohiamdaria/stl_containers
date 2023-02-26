@@ -57,7 +57,7 @@ TEST(MapTest, At) {
 
     AA.at(3.45678) = 'K';
     BB.at(3.45678) = 'K';
-    EXPECT_EQ(A.at(3.45678), B.at(3.45678));
+    EXPECT_EQ(AA.at(3.45678), BB.at(3.45678));
 }
 
 TEST(MapTest, Insert) {
@@ -133,6 +133,42 @@ TEST(MapTest, InsertOrAssign) {
   }
   EXPECT_EQ(A.size(), B.size());
 }
+
+TEST(MapTest, Swap) {
+    map<double, char> A ({pair(0.234567, 'a'), pair(9.5678, 'b'), pair(9.5678, 'c'), pair(3.45678, 'd')});
+    map<double, char> AA;
+    og_map<double, char> B({pair(0.234567, 'a'), pair(9.5678, 'b'), pair(9.5678, 'c'), pair(3.45678, 'd')});
+    og_map<double, char> BB;
+
+    AA.swap(A);
+    BB.swap(B);
+    auto j = BB.begin();
+    for (auto i : AA) {
+        EXPECT_EQ((*j).first, i.first);
+        EXPECT_EQ((*j).second, i.second);
+        j++;
+    }
+    EXPECT_EQ(AA.size(), BB.size());
+}
+
+TEST(MapTest, Merge) {
+    map<double, char> A ({pair(0.234567, 'a'), pair(9.5678, 'b'), pair(9.5678, 'c'), pair(3.45678, 'd')});
+    map<double, char> AA ({pair(0.5, 'K'), pair(9.111, 'M'), pair(9.09, 'N'), pair(2.45678, 'O')});
+
+    og_map<double, char> B({pair(0.234567, 'a'), pair(9.5678, 'b'), pair(9.5678, 'c'), pair(3.45678, 'd')});
+    og_map<double, char> BB ({pair(0.5, 'K'), pair(9.111, 'M'), pair(9.09, 'N'), pair(2.45678, 'O')});
+
+    A.merge(AA);
+    B.merge(BB);
+    auto j = BB.begin();
+    for (auto i : AA) {
+        EXPECT_EQ((*j).first, i.first);
+        EXPECT_EQ((*j).second, i.second);
+        j++;
+    }
+    EXPECT_EQ(AA.size(), BB.size());
+}
+
 TEST(MapTest, Emplace) {
   map<char, char> A({pair('a', '1'), pair('b', '2'), pair('b', '3'), pair('c', '4'), pair('d', '5')});
   og_map<int, int> B(
@@ -153,7 +189,7 @@ TEST(MapTest, SizeAndOthers) {
                             pair('e', '1'), pair('f', '2'), pair('g', '3'), pair('h', '4'), pair('k', '5'),
                             pair('l', '1'), pair('m', '2'), pair('n', '3'), pair('o', '4'), pair('p', '5')
                        });
-    og_map<int, int> B(
+    og_map<char, char> B(
             {pair('a', '1'), pair('b', '2'), pair('b', '3'), pair('c', '4'), pair('d', '5'),
                         pair('e', '1'), pair('f', '2'), pair('g', '3'), pair('h', '4'), pair('k', '5'),
                         pair('l', '1'), pair('m', '2'), pair('n', '3'), pair('o', '4'), pair('p', '5')});
@@ -166,13 +202,11 @@ TEST(MapTest, SizeAndOthers) {
         j++;
     }
     EXPECT_EQ(A.size(), B.size());
-    EXPECT_EQ(A.size(), 15);
-    EXPECT_EQ(B.size(), 15);
-/*
- * A.erase(A.begin());
- * /Users/dashakoroleva/CLionProjects/untitled2/tests/../s21_tree.h:283:7: error: no matching function for call to 'swap'
-      std::swap(left_max->key_, del->key_);
-*/
+    EXPECT_EQ(A.size(), 14);
+    EXPECT_EQ(B.size(), 14);
+    A.erase(A.begin());
+    EXPECT_EQ(A.size(), 13);
+
     A.clear();
     B.clear();
     EXPECT_EQ(A.size(), B.size());
