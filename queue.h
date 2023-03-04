@@ -113,10 +113,8 @@ namespace s21 {
             }
         }
 
-      void swap(queue& other) {
-            queue tmp = other;
-            other = *this;
-            *this = tmp;
+       void swap(queue& other) noexcept {
+           std::swap(*this, other);
       }
 
       template <class... Args>

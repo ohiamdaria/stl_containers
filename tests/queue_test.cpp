@@ -16,13 +16,26 @@ class QueueTest : public ::testing::Test {};
 TEST(QueueTest, DefaultConstructor) {
     queue<char> A;
     const queue<char> AC;
-    queue<char> B {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'};
-    std::deque<char> B_OG {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'};
+    queue<char> C {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'};
+    og_queue<char> C_OG ({'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'});
 
-    for (int i = 0; i < 9; i++) {
+    queue<char> B;
+    std::queue<char> B_OG;
+    for (int i = 48; i < 100; i++) {
+        B.push(char(i));
+        B_OG.push(char(i));
+    }
+
+    for (int i = 48; i < 100; i++) {
         EXPECT_EQ(B.front(), B_OG.front());
         B.pop();
-        B_OG.pop_front();
+        B_OG.pop();
+    }
+
+    for (int i = 0; i < 9; i++) {
+        EXPECT_EQ(C.front(), C_OG.front());
+        C.pop();
+        C_OG.pop();
     }
 }
 
@@ -90,6 +103,54 @@ TEST(QueueTest, Emplace) {
       }
 }
 
+TEST(QueueTest, CapacityTest) {
+    queue<double> A;
+    og_queue<double> B;
+    EXPECT_EQ(A.size(), B.size());
+    EXPECT_EQ(A.empty(), B.empty());
+    for (int i = 0; i < 666; i++) {
+        A.push(i * 0.12345);
+        B.push(i * 0.12345);
+    }
+    EXPECT_EQ(A.size(), B.size());
+    EXPECT_EQ(A.empty(), B.empty());
+    for (int i = 0; i < 66; i++) {
+        A.pop();
+        B.pop();
+    }
+
+    EXPECT_EQ(A.size(), B.size());
+    EXPECT_EQ(A.empty(), B.empty());
+}
+
+TEST(QueueTest, Swap) {
+    queue<double> A;
+    queue<double> B;
+    og_queue<double> AA;
+    og_queue<double> BB;
+    for (int i = 0; i < 666; i++) {
+        A.push(i * 0.23456 + i);
+        B.push(i * 0.98764 + i);
+
+        AA.push(i * 0.23456 + i);
+        BB.push(i * 0.98764 + i);
+    }
+
+    A.swap(B);
+    AA.swap(BB);
+    EXPECT_EQ(A.size(), AA.size());
+    EXPECT_EQ(A.size(), 666);
+    while (A.size() != 0) {
+        EXPECT_EQ(A.back(), AA.back());
+        A.pop();
+        AA.pop();
+    }
+    EXPECT_EQ(A.size(), 0);
+}
+
+
+
+
 TEST(QueueTest, Other) {
     queue<double> A;
     og_queue<double> A_OG;
@@ -100,9 +161,8 @@ TEST(QueueTest, Other) {
 
     EXPECT_EQ(A.size(), A_OG.size());
     EXPECT_EQ(A.size(), 666);
-    while (A.size() != 0) {
+    while (A.size() != 0)
         A.pop();
-    }
     EXPECT_EQ(A.size(), 0);
 }
 

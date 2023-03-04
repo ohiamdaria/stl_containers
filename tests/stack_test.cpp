@@ -16,6 +16,27 @@ class StackTest : public ::testing::Test {};
 TEST(StackTest, DefaultConstructor) {
     stack<int> A;
     const stack<int> AA;
+    stack<char> C {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'};
+    og_stack<char> C_OG ({'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'});
+
+    stack<char> B;
+    std::stack<char> B_OG;
+    for (int i = 48; i < 100; i++) {
+        B.push(char(i));
+        B_OG.push(char(i));
+    }
+
+    for (int i = 48; i < 100; i++) {
+        EXPECT_EQ(B.top(), B_OG.top());
+        B.pop();
+        B_OG.pop();
+    }
+
+    for (int i = 0; i < 9; i++) {
+        EXPECT_EQ(C.top(), C_OG.top());
+        C.pop();
+        C_OG.pop();
+    }
 }
 
 TEST(StackTest, Constructors) {
@@ -86,30 +107,36 @@ TEST(StackTest, PushPop2) {
 }
 
 TEST(StackTest, CapacityTest) {
-    stack<int> A;
-    og_stack<int> B;
+    stack<double> A;
+    og_stack<double> B;
     EXPECT_EQ(A.size(), B.size());
     EXPECT_EQ(A.empty(), B.empty());
-    A.push(1);
-    A.push(1);
-    A.push(1);
-    B.push(1);
-    B.push(1);
-    B.push(1);
+    for (int i = 0; i < 666; i++) {
+        A.push(i * 0.12345);
+        B.push(i * 0.12345);
+    }
     EXPECT_EQ(A.size(), B.size());
     EXPECT_EQ(A.empty(), B.empty());
-    A.pop();
-    B.pop();
+    for (int i = 0; i < 66; i++) {
+        A.pop();
+        B.pop();
+    }
     EXPECT_EQ(A.size(), B.size());
     EXPECT_EQ(A.empty(), B.empty());
 }
 
 TEST(StackTest, Swap) {
-    stack<int> A({1, 2, 3});
-    stack<int> B({4, 5, 6, 7});
+    stack<int> A({1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    stack<int> B({11, 12, 13, 14, 15, 16, 17, 18, 19, 20});
     A.swap(B);
-    EXPECT_EQ(A.top(), 7);
-    EXPECT_EQ(B.top(), 3);
+    EXPECT_EQ(A.top(), 20);
+    EXPECT_EQ(B.top(), 10);
+    for (int i = 10; i > 0; i--) {
+        EXPECT_EQ(B.top(), i);
+        EXPECT_EQ(A.top(), i + 10);
+        B.pop();
+        A.pop();
+    }
 }
 
 TEST(StackTest, Emplace) {

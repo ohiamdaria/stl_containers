@@ -163,32 +163,50 @@ TEST(ArrayTest, Swap) {
 }
 
 TEST(ArrayTest, Swap2) {
-    array<int, 3> A;
-    array<int, 3> B;
-    array<int> a = {1, 2, 3, 4, 5};
-    array<int> b = {11, 12, 13, 14, 15};
-    A[0] = a[0];
-    A[1] = a[1];
-    A[2] = a[2];
-    B[0] = b[0];
-    B[1] = b[1];
-    B[2] = b[2];
+    array<int, 50> A;
+    array<int, 50> B;
+    array<int, 50> a;
+    array<int, 50> b;
+
+    original_array<int, 3> AA;
+    original_array<int, 3> BB;
+    for (int i = 0; i < 50; i++) {
+        a[i] = i + 1;
+        b[i] = i + 10;
+    }
+    for (int i = 0; i < 50; i++) {
+        A.fill(a[i]);
+        B.fill(b[i]);
+        AA.fill(a[i]);
+        BB.fill(b[i]);
+    }
     A.swap(B);
-    EXPECT_EQ(*A.begin(), 11);
-    EXPECT_EQ(*(1 + A.begin()), 12);
+    AA.swap(BB);
+    for (int i = 0; i < 50; i++) {
+        EXPECT_EQ(*(A.begin() + i), *(B.begin() + i));
+    }
 }
 
 TEST(ArrayTest, Fill) {
-    array<int, 3> a = {1456, 265, 9873};
-    array<int, 2> A;
-    A.fill(a[0]);
-    array<int, 2> B;
-    B.fill(a[0]);
-    EXPECT_EQ(*A.begin(), *B.begin());
+    array<int, 50> a = {1456, 265, 9873};
+    array<int, 50> b = {1456, 265, 9873};
+    for (int i = 3; i < 40; i++) {
+        a[i] = i * 3;
+        b[i] = i * 3;
+    }
+    original_array<int, 43> A;
+    original_array<int, 43> B;
+    for (int i = 0; i < 43; i++) {
+        A.fill(a[i]);
+        B.fill(b[i]);
+    }
+
+    for (int i = 0; i < 43; i++)
+        EXPECT_EQ(*(A.begin() + i), *(B.begin() + i));
+
     *(A.begin()) = 100;
     EXPECT_NE(*A.begin(), *B.begin());
 
-    EXPECT_EQ(*(A.begin() + 1), *(B.begin() + 1));
     *(A.begin() + 1) = 100;
     EXPECT_NE(*(A.begin() + 1), *(B.begin() + 1));
 }

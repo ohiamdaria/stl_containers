@@ -160,13 +160,39 @@ TEST(MapTest, Merge) {
 
     A.merge(AA);
     B.merge(BB);
-    auto j = BB.begin();
-    for (auto i : AA) {
+    auto j = B.begin();
+    for (auto i : A) {
         EXPECT_EQ((*j).first, i.first);
         EXPECT_EQ((*j).second, i.second);
         j++;
     }
-    EXPECT_EQ(AA.size(), BB.size());
+    EXPECT_EQ(A.size(), B.size());
+}
+
+
+TEST(MapTest, Merge2) {
+    map<int, double> A;
+    map<int, double> AA;
+
+    og_map<int, double> B;
+    og_map<int, double> BB;
+
+    for (int i = 0; i < 10; i++) {
+        A.insert(i, i * 1.0 / 0.12345);
+        AA.insert(i * 5, i * 9.87654);
+        B.insert(std::pair(i, i * 1.0 / 0.12345));
+        BB.insert(std::pair(i * 5, i * 9.87654));
+    }
+
+    A.merge(AA);
+    B.merge(BB);
+    auto j = A.begin();
+    for (auto i : B) {
+        EXPECT_EQ((*j).first, i.first);
+        EXPECT_EQ((*j).second, i.second);
+        j++;
+    }
+    EXPECT_EQ(A.size(), B.size());
 }
 
 TEST(MapTest, Emplace) {
@@ -182,6 +208,50 @@ TEST(MapTest, Emplace) {
     j++;
   }
   EXPECT_EQ(A.size(), B.size());
+}
+
+TEST(MapTest, EraseAndOthers) {
+    map<double, char> A;
+    og_map<double, char> B;
+    for (int i = 0; i < 50; i++) {
+        A.insert(i * 0.1234, char(i));
+      B.insert(std::pair(i * 0.1234, char(i)));
+    }
+    EXPECT_EQ(A.at(5.0594), ')');
+    EXPECT_EQ(A.at(5.0594), B.at(5.0594));
+    EXPECT_EQ(A.at(4.4424), '$');
+    EXPECT_EQ(A.at(4.4424), B.at(4.4424));
+    EXPECT_EQ(A.at(5.9232), '0');
+    EXPECT_EQ(A.at(5.9232), B.at(5.9232));
+    EXPECT_EQ(A.size(), 50);
+    EXPECT_EQ(A.size(), B.size());
+
+    for (int i = 0; i < 10; i++) {
+        A.erase(A.begin());
+        B.erase(B.begin());
+    }
+    EXPECT_EQ(A.size(), 40);
+    EXPECT_EQ(A.size(), B.size());
+
+    A.insert(61 * 0.1234, char(61));
+    B.insert(std::pair(61 * 0.1234, char(61)));
+    A.insert(62 * 0.1234, char(62));
+    B.insert(std::pair(62 * 0.1234, char(62)));
+    A.insert(63 * 0.1234, char(63));
+    B.insert(std::pair(63 * 0.1234, char(63)));
+    EXPECT_EQ(A.size(), 43);
+    EXPECT_EQ(A.size(), B.size());
+
+    for (int i = 0; i < 40; i++) {
+        A.erase(A.begin());
+        B.erase(B.begin());
+    }
+    EXPECT_EQ(A.size(), 3);
+    EXPECT_EQ(A.size(), B.size());
+    A.clear();
+    B.clear();
+    EXPECT_EQ(A.size(), 0);
+    EXPECT_EQ(A.size(), B.size());
 }
 
 TEST(MapTest, SizeAndOthers) {
