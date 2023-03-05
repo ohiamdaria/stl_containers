@@ -140,7 +140,7 @@ TEST(QueueTest, Swap) {
     AA.swap(BB);
     EXPECT_EQ(A.size(), AA.size());
     EXPECT_EQ(A.size(), 666);
-    while (A.size() != 0) {
+    while (!A.empty()) {
         EXPECT_EQ(A.back(), AA.back());
         A.pop();
         AA.pop();
@@ -161,7 +161,7 @@ TEST(QueueTest, Other) {
 
     EXPECT_EQ(A.size(), A_OG.size());
     EXPECT_EQ(A.size(), 666);
-    while (A.size() != 0)
+    while (!A.empty())
         A.pop();
     EXPECT_EQ(A.size(), 0);
 }

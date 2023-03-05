@@ -42,7 +42,7 @@ TEST(StackTest, DefaultConstructor) {
 TEST(StackTest, Constructors) {
     stack<double> A;
     og_stack<double> B;
-    for (double i = 0; i < 100; i++) {
+    for (int i = 0; i < 100; i++) {
         A.push(i * 0.2345);
         B.push(i * 0.2345);
     }
@@ -58,7 +58,7 @@ TEST(StackTest, Constructors) {
 TEST(StackTest, InitializerConstructor) {
     stack<char> A({'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'});
     og_stack<char> B({'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'});
-    while (B.size() != 0) {
+    while (!B.empty()) {
         EXPECT_EQ(A.top(), B.top());
         A.pop();
         B.pop();
@@ -72,7 +72,7 @@ TEST(StackTest, AssignmentOperators) {
     og_stack<char> B({'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k'});
     og_stack<char> BB({0, 0, 0});
     BB = B;
-    while (BB.size() != 0) {
+    while (!BB.empty()) {
         EXPECT_EQ(AA.top(), BB.top());
         AA.pop();
         BB.pop();
@@ -166,7 +166,7 @@ TEST(StackTest, Other) {
 
     EXPECT_EQ(A.size(), A_OG.size());
     EXPECT_EQ(A.size(), 100);
-    while (A.size() != 0) {
+    while (!A.empty()) {
         A.pop();
     }
     EXPECT_EQ(A.size(), 0);
