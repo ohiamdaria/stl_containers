@@ -61,8 +61,6 @@ namespace s21 {
 
         const_iterator end() const noexcept { return rbTree_->cend(); }
 
-
-
         mapped_type &at(const key_type &key) {
             value_type search_pair(key, mapped_type{});
             iterator it_search = rbTree_->find(search_pair);
@@ -74,9 +72,9 @@ namespace s21 {
             }
         }
 
-        const mapped_type &at(const key_type &key) const {
-            return const_cast<map<Key, T> *>(this)->at(key);
-        }
+//        const mapped_type &at(const key_type &key) const {
+//            return const_cast<map<Key, T> *>(this)->at(key);
+//        }
 
         bool empty() const noexcept { return rbTree_->empty(); }
 
@@ -111,19 +109,12 @@ namespace s21 {
         void merge(map &other) noexcept { rbTree_->unique_merge(*other.rbTree_); }
 
         iterator find(const Key &key) noexcept {
-            auto result = rbTree_->find(key);
-            return result == end() ? end() : result;
+            value_type search_pair(key, mapped_type{});
+            if (rbTree_->contains(search_pair)) {
+                auto result = rbTree_->find(search_pair);
+                return result == end() ? end() : result;
+            } else return end();
         }
-
-        const_iterator find(const Key &key) const {
-            auto result = rbTree_->find(key);
-            return result == end() ? end() : result;
-        }
-
-        bool contains(const Key &key) const {
-            return rbTree_->contains(key);
-        }
-
 
         // need noexcept?
         template<class... Args>

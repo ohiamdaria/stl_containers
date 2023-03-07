@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/Users/dashakoroleva/Desktop/stl_containers/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -isystem /opt/homebrew/include -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -fcolor-diagnostics -fsanitize=address -std=gnu++17 -o CMakeFiles/tests.dir/tests/array_test.cpp.o -c /Users/dashakoroleva/Desktop/stl_containers/tests/array_test.cpp",
+  "file": "/Users/dashakoroleva/Desktop/stl_containers/tests/array_test.cpp"
+},
+{
+  "directory": "/Users/dashakoroleva/Desktop/stl_containers/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -isystem /opt/homebrew/include -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -fcolor-diagnostics -fsanitize=address -std=gnu++17 -o CMakeFiles/tests.dir/tests/map_test.cpp.o -c /Users/dashakoroleva/Desktop/stl_containers/tests/map_test.cpp",
+  "file": "/Users/dashakoroleva/Desktop/stl_containers/tests/map_test.cpp"
+},
+{
+  "directory": "/Users/dashakoroleva/Desktop/stl_containers/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -isystem /opt/homebrew/include -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -fcolor-diagnostics -fsanitize=address -std=gnu++17 -o CMakeFiles/tests.dir/tests/queue_test.cpp.o -c /Users/dashakoroleva/Desktop/stl_containers/tests/queue_test.cpp",
+  "file": "/Users/dashakoroleva/Desktop/stl_containers/tests/queue_test.cpp"
+},
+{
+  "directory": "/Users/dashakoroleva/Desktop/stl_containers/cmake-build-debug",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++ -isystem /opt/homebrew/include -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -fcolor-diagnostics -fsanitize=address -std=gnu++17 -o CMakeFiles/tests.dir/tests/stack_test.cpp.o -c /Users/dashakoroleva/Desktop/stl_containers/tests/stack_test.cpp",
+  "file": "/Users/dashakoroleva/Desktop/stl_containers/tests/stack_test.cpp"
+}
+]

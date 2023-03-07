@@ -2,6 +2,7 @@
 
 #include <string>
 #include "gtest/gtest.h"
+#include <map>
 
 template <class T, class K>
 using map = s21::map<T, K>;
@@ -276,12 +277,32 @@ TEST(MapTest, SizeAndOthers) {
     EXPECT_EQ(B.size(), 14);
     A.erase(A.begin());
     EXPECT_EQ(A.size(), 13);
+    EXPECT_EQ(A.max_size(), 230584300921369395);
 
     A.clear();
     B.clear();
     EXPECT_EQ(A.size(), B.size());
     EXPECT_EQ(A.size(), 0);
     EXPECT_EQ(B.size(), 0);
+    EXPECT_TRUE(A.empty());
+    EXPECT_TRUE(B.empty());
+}
+
+TEST(MapTest, ContainsTest) {
+    map<int, int> A ({pair(1, 123), pair(2, 345), pair(2, 456), pair(3, 567)});
+    og_map<int, int> B({pair(1, 123), pair(2, 345), pair(2, 456), pair(3, 567)});
+
+    EXPECT_EQ((*A.find(1)).second, 123);
+    EXPECT_EQ((*B.find(1)).second, 123);
+    EXPECT_EQ((*A.find(1)).second, (*B.find(1)).second);
+
+    EXPECT_EQ((*A.find(2)).second, 345);
+    EXPECT_EQ((*B.find(2)).second, 345);
+    EXPECT_EQ((*A.find(2)).second, (*B.find(2)).second);
+
+    EXPECT_EQ((*A.find(3)).second, 567);
+    EXPECT_EQ((*B.find(3)).second, 567);
+    EXPECT_EQ((*A.find(3)).second, (*B.find(3)).second);
 }
 
  int main(int argc, char **argv) {
