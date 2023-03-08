@@ -23,7 +23,7 @@ namespace s21 {
         value_type array_[N] = {};
 
     public:
-        array() = default;;
+        array() = default;
         array(std::initializer_list<value_type> const& items) {
             pointer ptr = array_;
             for (auto item : items)
@@ -102,7 +102,7 @@ namespace s21 {
         }
 
         constexpr void fill( const T& value ) {
-            for (auto i : *this) {
+            for ([[maybe_unused]] auto i : *this) {
                 i = value;
             }
         }
