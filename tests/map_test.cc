@@ -288,7 +288,7 @@ TEST(MapTest, SizeAndOthers) {
     EXPECT_TRUE(B.empty());
 }
 
-TEST(MapTest, ContainsTest) {
+TEST(MapTest, FindTest) {
     map<int, int> A ({pair(1, 123), pair(2, 345), pair(2, 456), pair(3, 567)});
     og_map<int, int> B({pair(1, 123), pair(2, 345), pair(2, 456), pair(3, 567)});
 

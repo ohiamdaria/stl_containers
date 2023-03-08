@@ -72,10 +72,6 @@ namespace s21 {
             }
         }
 
-//        const mapped_type &at(const key_type &key) const {
-//            return const_cast<map<Key, T> *>(this)->at(key);
-//        }
-
         bool empty() const noexcept { return rbTree_->empty(); }
 
         size_type size() const noexcept { return rbTree_->size(); }
